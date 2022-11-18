@@ -1,5 +1,5 @@
 import "./App.css";
-import { Card } from "./component/Card";
+import Card from "./component/Card";
 
 function App() {
   function shuffle(array) {
@@ -29,16 +29,18 @@ function App() {
     "Himanshu",
     "Praveen",
     "Ravindra",
-    "Aman",
+    "Lal",
     "Ankit",
   ];
   const final = [...arr, ...arr];
   shuffle(final);
   return (
-    <div className="App">
-      {final.map((item, index) => {
-        return <Card key={index} name={item} />;
-      })}
+    <div style={{ width: '500px', marginLeft: 'auto', marginRight: 'auto' }}>
+      <div className="cardContainer">
+        {final.map((item, index) => {
+          return <Card key={index} name={item} />;
+        })}
+      </div>
     </div>
   );
 }

@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+.card{
+  width: 120px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #282c34;
+
+}
+.cardContainer{
+display: grid;
+background-color: aliceblue;
+grid-template-columns: auto auto auto auto;
+gap: 10px
+}
+.nameStyle{
+  font-weight: 700;
+  font-size: 24px;
+
+}
