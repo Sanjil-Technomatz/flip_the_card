@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-const Card = ({ id, name, visible, selectedCard, cardChange }) => {
+const Card = ({ id, name, visible, selectedCard, cardChange, gameStatus }) => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     setIsVisible(visible);
@@ -9,9 +9,9 @@ const Card = ({ id, name, visible, selectedCard, cardChange }) => {
   }, [visible]);
 
   return (
-    <div id={id} className="card" onClick={() => cardChange(id)}>
-      <span className="nameStyle">{selectedCard && selectedCard.includes(id) ? name : "#"}</span>
-    </div>
+    <button id={id} className={`card`} onClick={() => cardChange(id)} disabled={gameStatus.includes(name)} >
+      <span className="nameStyle">{(selectedCard && selectedCard.includes(id) || gameStatus.includes(name) || isVisible) ? name : "#"}</span>
+    </button>
   );
 };
 

@@ -37,6 +37,8 @@ function App() {
   ];
   const final = [...arr, ...arr];
   const [selectCard, setSelectCard] = useState([])
+  const [gameStatus, setGameStatus] = useState([])
+
   useEffect(() => { shuffle(final) }, []);
 
   const cardStatusChange = card => {
@@ -44,17 +46,28 @@ function App() {
 
     if (selectCard.length === 2)
       setSelectCard([card])
+
     else {
       setSelectCard([...selectCard, card])
+
     }
 
   }
-  console.log(selectCard)
+  useEffect(() => {
+    if (selectCard.length === 2) {
+      if (final[selectCard[0]] === final[selectCard[1]]) {
+        setGameStatus([...gameStatus, final[selectCard[0]]])
+      } else {
+        setTimeout(() => { setSelectCard([]) }, 1500)
+      }
+    }
+  }, [selectCard])
+  console.log(gameStatus)
   return (
     <div style={{ width: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
       <div className="cardContainer">
         {final.map((item, index) => {
-          return <Card key={index} id={index} name={item} visible={visible} selectedCard={selectCard} cardChange={cardStatusChange} />;
+          return <Card key={index} id={index} name={item} gameStatus={gameStatus} visible={visible} selectedCard={selectCard} cardChange={cardStatusChange} />;
         })}
       </div>
       <button onClick={() => setVisible(true)}> Start </button>
