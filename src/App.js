@@ -1,6 +1,7 @@
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Card from "./component/Card";
-import React, { useState } from "react";
+
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -30,17 +31,30 @@ function App() {
     "Hariram",
     "Himanshu",
     "Praveen",
-    "Ravindra",
+    "Ravinder",
     "Lal",
     "Ankit",
   ];
   const final = [...arr, ...arr];
-  shuffle(final);
+  const [selectCard, setSelectCard] = useState([])
+  useEffect(() => { shuffle(final) }, []);
+
+  const cardStatusChange = card => {
+    console.log(card)
+
+    if (selectCard.length === 2)
+      setSelectCard([card])
+    else {
+      setSelectCard([...selectCard, card])
+    }
+
+  }
+  console.log(selectCard)
   return (
-    <div style={{ width: "500px", marginLeft: "auto", marginRight: "auto" }}>
+    <div style={{ width: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
       <div className="cardContainer">
         {final.map((item, index) => {
-          return <Card key={index} name={item} visible={visible} />;
+          return <Card key={index} id={index} name={item} visible={visible} selectedCard={selectCard} cardChange={cardStatusChange} />;
         })}
       </div>
       <button onClick={() => setVisible(true)}> Start </button>

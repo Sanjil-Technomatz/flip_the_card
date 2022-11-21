@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-const Card = ({ name, visible }) => {
+const Card = ({ id, name, visible, selectedCard, cardChange }) => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     setIsVisible(visible);
@@ -7,9 +7,10 @@ const Card = ({ name, visible }) => {
       setIsVisible(false);
     }, 3000);
   }, [visible]);
+
   return (
-    <div className="card" onClick={() => setIsVisible(true)}>
-      <span className="nameStyle">{isVisible ? name : "#"}</span>
+    <div id={id} className="card" onClick={() => cardChange(id)}>
+      <span className="nameStyle">{selectedCard && selectedCard.includes(id) ? name : "#"}</span>
     </div>
   );
 };
