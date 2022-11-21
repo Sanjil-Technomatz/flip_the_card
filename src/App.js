@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Card from "./component/Card";
 
-
 function App() {
   const [visible, setVisible] = useState(false);
-  function shuffle(array) {
+  const shuffle = (array) => {
     let currentIndex = array.length,
       randomIndex;
 
@@ -21,9 +20,8 @@ function App() {
         array[currentIndex],
       ];
     }
-
     return array;
-  }
+  };
 
   const arr = [
     "Sanjil",
@@ -35,39 +33,42 @@ function App() {
     "Lal",
     "Ankit",
   ];
-  const final = [...arr, ...arr];
-  const [selectCard, setSelectCard] = useState([])
-  const [gameStatus, setGameStatus] = useState([])
+  const final = useRef(shuffle([...arr, ...arr]));
+  const [selectCard, setSelectCard] = useState([]);
+  const [gameStatus, setGameStatus] = useState([]);
 
-  useEffect(() => { shuffle(final) }, []);
-
-  const cardStatusChange = card => {
-    console.log(card)
-
-    if (selectCard.length === 2)
-      setSelectCard([card])
-
+  const cardStatusChange = (card) => {
+    if (selectCard.length === 2) setSelectCard([card]);
     else {
-      setSelectCard([...selectCard, card])
-
+      setSelectCard([...selectCard, card]);
     }
-
-  }
+  };
   useEffect(() => {
     if (selectCard.length === 2) {
-      if (final[selectCard[0]] === final[selectCard[1]]) {
-        setGameStatus([...gameStatus, final[selectCard[0]]])
+      if (final.current[selectCard[0]] === final.current[selectCard[1]]) {
+        setGameStatus([...gameStatus, final.current[selectCard[0]]]);
       } else {
-        setTimeout(() => { setSelectCard([]) }, 1500)
+        setTimeout(() => {
+          setSelectCard([]);
+        }, 1500);
       }
     }
-  }, [selectCard])
-  console.log(gameStatus)
+  }, [selectCard]);
   return (
-    <div style={{ width: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+    <div style={{ width: "560px", marginLeft: "auto", marginRight: "auto" }}>
       <div className="cardContainer">
-        {final.map((item, index) => {
-          return <Card key={index} id={index} name={item} gameStatus={gameStatus} visible={visible} selectedCard={selectCard} cardChange={cardStatusChange} />;
+        {final.current.map((item, index) => {
+          return (
+            <Card
+              key={index}
+              id={index}
+              name={item}
+              gameStatus={gameStatus}
+              visible={visible}
+              selectedCard={selectCard}
+              cardChange={cardStatusChange}
+            />
+          );
         })}
       </div>
       <button onClick={() => setVisible(true)}> Start </button>

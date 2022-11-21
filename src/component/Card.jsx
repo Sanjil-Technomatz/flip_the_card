@@ -9,8 +9,21 @@ const Card = ({ id, name, visible, selectedCard, cardChange, gameStatus }) => {
   }, [visible]);
 
   return (
-    <button id={id} className={`card`} onClick={() => cardChange(id)} disabled={gameStatus.includes(name)} >
-      <span className="nameStyle">{(selectedCard && selectedCard.includes(id) || gameStatus.includes(name) || isVisible) ? name : "#"}</span>
+    <button
+      id={id}
+      className={`card`}
+      onClick={() => {
+        if (visible) cardChange(id);
+      }}
+      disabled={gameStatus.includes(name)}
+    >
+      <span className="nameStyle">
+        {(selectedCard && selectedCard.includes(id)) ||
+        gameStatus.includes(name) ||
+        isVisible
+          ? name
+          : "#"}
+      </span>
     </button>
   );
 };
