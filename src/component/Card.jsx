@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 const Card = ({ id, name, visible, selectedCard, cardChange, gameStatus }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [rotatecard, setRotatecard] = useState(false);
+  const isFlipped = selectedCard && selectedCard.includes(id) || gameStatus.includes(name)
   useEffect(() => {
     setIsVisible(visible);
     setTimeout(() => {
@@ -9,22 +11,13 @@ const Card = ({ id, name, visible, selectedCard, cardChange, gameStatus }) => {
   }, [visible]);
 
   return (
-    <button
-      id={id}
-      className={`card`}
-      onClick={() => {
-        if (visible) cardChange(id);
-      }}
-      disabled={gameStatus.includes(name)}
-    >
-      <span className="nameStyle">
-        {(selectedCard && selectedCard.includes(id)) ||
-        gameStatus.includes(name) ||
-        isVisible
-          ? name
-          : "#"}
-      </span>
-    </button>
+    <div className={`card`}>
+
+      <button id={id} className={'buttonClass'} onClick={() => { if (visible) cardChange(id); }} disabled={gameStatus.includes(name)} >
+        {(isFlipped || isVisible) ? <span className="nameStyle">{name}</span> : <div className={`back`} ></div>}
+      </button>
+
+    </div >
   );
 };
 
